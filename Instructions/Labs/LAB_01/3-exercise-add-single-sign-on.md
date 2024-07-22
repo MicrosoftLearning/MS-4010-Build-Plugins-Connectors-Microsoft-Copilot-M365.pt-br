@@ -20,7 +20,7 @@ No Visual Studio:
     ```json
     "identifierUris": [
         "api://${{BOT_DOMAIN}}/botid-${{BOT_ID}}"
-    ]
+    ],
     ```
 
 1. No arquivo, atualize a matriz **oauth2Permissions** para criar um escopo para permitir que o Teams chame APIs da Web como administrador ou usuário:
@@ -86,7 +86,7 @@ No Visual Studio:
             "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
           ]
         }
-      ]
+      ],
     ```
 
 1. Salvar suas alterações
@@ -96,13 +96,13 @@ Em seguida, atualize o arquivo de manifesto do aplicativo para definir o recurso
 Continuando no Visual Studio:
 
 1. Na pasta **appPackage**, abra o arquivo chamado **manifest.json**
-1. No arquivo , adicione o seguinte código:
+1. No arquivo, adicione o seguinte código após a **descrição**:
 
     ```json
     "webApplicationInfo": {
       "id": "${{BOT_ID}}",
       "resource": "api://${{BOT_DOMAIN}}/botid-${{BOT_ID}}"
-    }
+    },
     ```
 
 1. Salvar suas alterações
@@ -500,7 +500,7 @@ Agora com tudo pronto, execute o processo Preparar dependências do aplicativo d
 
 Continuando no Visual Studio:
 
-1. No **Gerenciador de Soluções**, clique com o botão direito do mouse no projeto **MsgExtProductSupport**
+1. No **Gerenciador de Soluções**, clique com o botão direito do mouse no projeto **TeamsApp**.
 1. Expanda o menu Kit de Ferramentas** do Teams**, selecione **Preparar dependências do aplicativo Teams**
 1. Na caixa de diálogo **Conta do Microsoft 365**, selecione **Continuar**
 1. Na caixa de diálogo **Provisionar**, selecione **Provisionar**
@@ -522,16 +522,11 @@ Continuando no Visual Studio:
 1. Na área de redigir mensagem, selecione **...** para abrir o submenu do aplicativo
 1. Na lista de aplicativos, selecione **produtos da Contoso** para abrir a extensão de mensagem
 1. Na caixa de texto, digite **Bot Builder** para iniciar uma pesquisa
-1. Na lista de resultados, **selecione um resultado** para inserir um cartão na caixa de redigir mensagem
 1. A mensagem mensagem **Você precisará entrar para usar este aplicativo** será exibida
 1. Selecione o **link de entrada** para abrir uma nova guia e iniciar o fluxo de autenticação
-1. Na página de consentimento de permissões, revise as permissões que estão sendo solicitadas
-1. Selecione *Aceitar* para fechar a guia e retornar ao Microsoft Teams
-1. Na área de redigir mensagem, selecione **...** para abrir o submenu do aplicativo
-1. Na lista de aplicativos, selecione **produtos da Contoso** para abrir a extensão de mensagem
-1. Na caixa de texto, digite **Bot Builder** para iniciar uma pesquisa
-1. Você precisará fazer login novamente. Siga o **link de entrada** novamente para iniciar a pesquisa.
-1. Na lista de resultados, **selecione um resultado** para inserir um cartão na caixa de redigir mensagem
+1. Na página de consentimento de permissões, revise as permissões que estão sendo solicitadas.
+1. Selecione **Aceitar** para fechar a guia e retornar ao Microsoft Teams
+1. Na lista de resultados, **clique em um resultado** para inserir um cartão na caixa de redigir mensagem e envie.
 
 Feche o navegador para interromper a sessão de depuração.
 
