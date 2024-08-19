@@ -82,18 +82,11 @@ O aplicativo de exemplo inclui alguns documentos para o Copilot referenciar dura
 
 Ao fazer essa tarefa com antecedência, há uma boa chance de que o mecanismo de pesquisa do Microsoft 365 os tenha descoberto quando você estiver tudo pronto para eles.
 
-## Tarefa 4 – Instalar e configurar o Kit de Ferramentas do Teams para Visual Studio Code
+## Tarefa 4: Configurar o Kit de Ferramentas do Teams para Visual Studio Code
 
 Nesta tarefa, você instalará a versão atual do [Kit de Ferramentas do Teams para Visual Studio Code](https://learn.microsoft.com/microsoftteams/platform/toolkit/teams-toolkit-fundamentals?pivots=visual-studio-code-v5). A maneira mais fácil de fazer isso é diretamente no Visual Studio Code.
 
-> [!NOTE]
-> Não instale a versão de pré-lançamento, pois ela não foi testada com este laboratório.
-
 1. Abra a **pasta de trabalho** no Visual Studio Code. Pode ser solicitado que você confie nos autores desta pasta; se isso acontecer, confie.
-
-1. Na barra lateral à esquerda, selecione **Extensões** 1️⃣. Insira a palavra **teams** na caixa de pesquisa 2️⃣ e localize o **Kit de Ferramentas do Teams** nos resultados da pesquisa. Clique em **Instalar** 3️⃣.
-
-    ![Captura de tela da instalação do Kit de Ferramentas do Teams no Visual Studio Code.](../media/1-04-install-teams-toolkit-01.png)
 
 1. Agora selecione o ícone do **Kit de Ferramentas do Teams** à esquerda 1️⃣. Se oferecer opções para criar um novo projeto, você provavelmente está na pasta errada. No **menu Arquivo do Visual Studio Code**, selecione **Abrir pasta** e abra diretamente a pasta **msgext-northwind-inventory-ts**. Você verá as seções de Contas, Meio Ambiente, etc., conforme mostrado abaixo.
 
@@ -103,7 +96,7 @@ Nesta tarefa, você instalará a versão atual do [Kit de Ferramentas do Teams p
 
 1. Uma janela do navegador será aberta oferecendo o login no Microsoft 365. Quando aparecer **Você entrou e fechar esta página**, feche-a-.
 
-1. Por fim, verifique se uma marca de seleção verde aparece ao lado de **Sideload habilitado**. Se não aparecer, isso significa que sua conta de usuário não tem permissão para carregar aplicativos do Teams. Essa permissão está "desativada" por padrão; confira estas [instruções para permitir que os usuários carreguem aplicativos personalizados](https://learn.microsoft.com/microsoftteams/teams-custom-app-policies-and-settings#allow-users-to-upload-custom-apps)
+1. Por fim, verifique se uma marca de seleção verde aparece ao lado de **Upload de aplicativo personalizado habilitado**. Se não aparecer, isso significa que sua conta de usuário não tem permissão para carregar aplicativos do Teams. Essa permissão está "desativada" por padrão; confira estas [instruções para permitir que os usuários carreguem aplicativos personalizados](https://learn.microsoft.com/microsoftteams/teams-custom-app-policies-and-settings#allow-users-to-upload-custom-apps)
 
     ![Captura de tela mostrando que o sideload está habilitado.](../media/1-04-setup-teams-toolkit-03.png)
 

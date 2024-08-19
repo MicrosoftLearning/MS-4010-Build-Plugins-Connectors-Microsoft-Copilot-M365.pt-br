@@ -8,7 +8,7 @@ lab:
 
 Neste exercício, você vai provisionar e configurar um site do SharePoint Online, que armazena informações sobre produtos como itens em uma lista. Você vai atualizar o código de extensão de mensagem para recuperar os itens de lista no SharePoint Online usando o SDK do Microsoft Graph e retornar os dados de item de lista nos resultados da pesquisa. Por fim, você vai executar e depurar sua extensão de mensagem e testá-la no Microsoft Teams.
 
-:::image type="content" source="../media/4-search-results-sharepoint-online.png" alt-text="Captura de tela dos resultados da pesquisa retornados por uma extensão de mensagem baseada em pesquisa no Microsoft Teams. Os resultados da pesquisa são retornados do SharePoint Online. Cada resultado da pesquisa exibe o nome do produto, a categoria e a imagem do produto." lightbox="../media/4-search-results-sharepoint-online.png":::
+![Captura de tela dos resultados da pesquisa retornados por uma extensão de mensagem baseada em pesquisa no Microsoft Teams. Os resultados da pesquisa são retornados do SharePoint Online. Cada resultado da pesquisa exibe o nome, a categoria e a imagem do produto.](../media/4-search-results-sharepoint-online.png)
 
 ## Tarefa 1 – Provisionar e configurar o site do SharePoint de marketing de produto
 
@@ -26,7 +26,7 @@ Em um navegador da Web:
 
 Você receberá um email no seu endereço de e-mail notificando quando o provisionamento do site for concluído. A conclusão desse processo pode levar alguns minutos.
 
-:::image type="content" source="../media/1-sharepoint-online-product-support-site.png" alt-text="Captura de tela da página inicial do site da equipe do SharePoint Online de suporte ao produto. Uma lista de produtos lançados recentemente é exibida." lightbox="../media/1-sharepoint-online-product-support-site.png":::
+![Captura de tela da página inicial do site da equipe do SharePoint Online de suporte ao produto. Uma lista de produtos lançados recentemente é mostrada.](../media/1-sharepoint-online-product-support-site.png)
 
 Para habilitar a filtragem nas colunas Título e Categoria de varejo ao consultar a lista usando a API do Microsoft Graph, crie índices na lista.
 

@@ -19,8 +19,8 @@ Comece registrando um novo registro de aplicativo do Entra, que o conector perso
 Em um navegador da Web:
 
 1. Acesse o **portal do Azure** em [https://portal.azure.com](https://portal.azure.com).
-1. Selecione **Microsoft Entra ID** no painel de navegação.
-1. Selecione **Registros de aplicativo** no painel de navegação.
+1. No painel de navegação, selecione **exibir**embaixo de **Microsoft Entra ID**.
+1. No painel de navegação, expanda **Gerenciar** e selecione **Registros de aplicativo**.
 1. No painel de navegação superior, selecione **Novo registro**.
 1. Especifique os seguintes valores:
    1. **Nome:** docs do MSGraph conetor do Graph
@@ -34,8 +34,9 @@ Como esse conector personalizado do Graph é executado sem interação do usuár
 
 Continuando no navegador da Web:
 
-1. Selecione **Certificados e segredos** na navegação lateral.
-1. Ative a guia **Segredos do cliente** e selecione o botão **Novo segredo do cliente**.
+1. Na navegação lateral, expanda **Gerenciar** e selecione **Certificados e segredos**.
+1. Selecione a guia  **Segredos do cliente** e selecione **Novo segredo do cliente**.
+1. Insira uma **descrição** do **Segredo do conector do Graph dos documentos do MSGraph**.
 1. Crie o segredo selecionando **Adicionar**.
 1. Copie o **valor** do segredo recém-criado. Você precisará dela mais tarde.
 
@@ -60,11 +61,12 @@ Continuando no navegador da Web:
 
 Depois de configurar o registro de aplicativo do Entra, a próxima etapa é criar um aplicativo de console, onde você implementará o código do conector do Graph.
 
-Em um terminal:
+Abra um terminal do Windows para criar um novo aplicativo de console:
 
-1. Crie uma nova pasta e altere o diretório de trabalho para essa pasta.
-1. Crie um novo aplicativo de console executando `dotnet new console`.
+1. Crie uma pasta digitando `mkdir documents\console_app` e, em seguida, navegue até a nova pasta digitando `cd .\documents\console_app`.
+1. Crie um aplicativo de console executando `dotnet new console`
 1. Adicione dependências, que você precisa para criar o conector:
+   1. Adicione Nuget.org como uma fonte de pacote, executar `dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org`
    1. Para adicionar a biblioteca necessária para autenticar com o Microsoft 365, execute `dotnet add package Azure.Identity`.
    1. Para adicionar a biblioteca de cliente para se comunicar com as APIs do Graph, execute `dotnet add package Microsoft.Graph`.
    1. Para adicionar a biblioteca necessária para trabalhar com segredos do usuário, que você configurará na próxima etapa, execute `dotnet add package Microsoft.Extensions.Configuration.UserSecrets`.
@@ -88,9 +90,9 @@ Em um terminal:
 
 ## Tarefa 6 – Criar um cliente do Microsoft Graph
 
-Os conectores personalizados do Graph usam a API do Microsoft Graph para gerenciar sua conexão externa e items. Comece criando uma instância da classe `GraphServiceClient` no pacote pacote NuGet do **Microsoft.Graph** que você instalou no projeto.
+Os conectores personalizados do Graph usam a API do Microsoft Graph para gerenciar sua conexão externa e items. Comece criando uma instância da `GraphServiceClient` classe no pacote NuGet do **Microsoft.Graph** que você instalou no projeto.
 
-1. Abra o projeto no seu editor de código.
+1. Abra seu projeto no Visual Studio 2022.
 1. No projeto, adicione um novo arquivo de código chamado **GraphService.cs**.
 1. No arquivo, comece adicionando referências aos namespaces que você usará adicionando:
 
@@ -141,7 +143,7 @@ Os conectores personalizados do Graph usam a API do Microsoft Graph para gerenci
    }
    ```
 
-1. Crie uma nova instância do `GraphServiceClient`, usando como credencial as informações sobre o registro de aplicativo do Entra que você armazenou anteriormente:
+1. Na introdução, crie uma nova instância do `GraphServiceClient`, usando uma credencial com as informações sobre o registro de aplicativo do Entra que você armazenou anteriormente:
 
    ```csharp
    var builder = new ConfigurationBuilder().AddUserSecrets<GraphService>();
@@ -174,7 +176,7 @@ Os conectores personalizados do Graph usam a API do Microsoft Graph para gerenci
        {
          if (_client is null)
          {
-           var builder = new ConfigurationBuilder().   AddUserSecrets<GraphService>();
+           var builder = new ConfigurationBuilder().AddUserSecrets<GraphService>();
            var config = builder.Build();
      
            var clientId = config["EntraId:ClientId"];
@@ -226,7 +228,7 @@ No editor de código:
        {
          Id = "msgraphdocs",
          Name = "Microsoft Graph documentation",
-         Description = "Documentation for Microsoft Graph API which    explains what Microsoft Graph is and how to use it."
+         Description = "Documentation for Microsoft Graph API which explains what Microsoft Graph is and how to use it."
        };
      }
    }
@@ -389,6 +391,7 @@ No editor de código:
    ```csharp
    async static Task CreateConnection()
    {
+
    }
    ```
 

@@ -13,11 +13,6 @@ Neste exercício, você executará o aplicativo como um plug-in para o Microsoft
 
 ## Tarefa 1– Testar no Microsoft Copilot para Microsoft 365 (parâmetro único)
 
-1. No Microsoft Teams, alterne a opção **Testar o novo Teams** para migrar para o aplicativo cliente do **novo Teams**.
-
-    > [!IMPORTANT]
-    > O Microsoft Copilot para Microsoft 365 só funciona na experiência do **novo Teams**. Não deixe de fazer esta tarefa! Se você reiniciar o depurador depois de alternar para o **novo Teams**, poderá receber uma mensagem de erro após o depurador iniciar. Este é um problema conhecido; basta fechar a caixa de diálogo de erro e continuar o teste.
-
 1. No trilho do aplicativo à esquerda, selecione o aplicativo **Copilot**.
 
 1. No lado direito da caixa de redigir, clique no ícone do **plug-in** 1️⃣ e ative o plug-in do **Inventário da Northwind** 2️⃣.
