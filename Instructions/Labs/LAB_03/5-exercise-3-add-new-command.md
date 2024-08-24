@@ -46,19 +46,27 @@ Para isso, passaremos pelas seguintes tarefas:
    ```
 
 > [!NOTE] 
-> A **ID** é a conexão entre a IU e o código. Esse valor é definido como **COMMAND_ID** nos arquivos de **disconto/produto/SearchCommand.ts** Veja como cada um desses arquivos tem um **COMMAND_ID** exclusivo que corresponde ao valor de **id**.
+> A **ID** é a conexão entre a IU e o código. Esse valor é definido como **COMMAND_ID** nos arquivos **discount\product\SearchCommand.ts** . Veja como cada um desses arquivos tem um **COMMAND_ID** exclusivo que corresponde ao valor de **id**.
 
 ## Tarefa 2 – Criar um manipulador para o comando "companySearch"
 
 Neste exercício, copiaremos parte do código existente para criar novos manipuladores para nossos comandos. 
 
-1. No Visual Studio Code, copie "**productSearchCommand.ts**" e cole na mesma pasta para criar uma cópia. Renomeie este arquivo **customerSearchCommand.ts**.
+1. No Visual Studio Code, no seu **diretório de trabalho**, navegue até **.\src\messageExtensions**, copie '**productSearchCommand.ts**' e cole na mesma pasta para criar uma cópia. Renomeie este arquivo **customerSearchCommand.ts**.
+
+1. Mude a linha 7 para:
+
+    ```typescript
+    import { searchProductsByCustomer } from "../northwindDB/products";
+    ```
 
 1. Mude a linha 10 para:
 
    ```javascript
    const COMMAND_ID = "companySearch";
    ```
+
+
 
 1. Substitua o conteúdo de **handleTeamsMessagingExtensionQuery** por:
 

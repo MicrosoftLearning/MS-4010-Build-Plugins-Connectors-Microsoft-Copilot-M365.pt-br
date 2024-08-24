@@ -19,9 +19,9 @@ No Microsoft Teams:
 1. No trilho esquerdo, selecione **Copilot**
 1. Inicie a conversa perguntando: **o que é o Microsoft Graph**
 1. O Copiloto responderá com uma resposta. Observe que a resposta contém uma referência ao item externo que você ingeriu anteriormente.
-   :::image type="content" source="../media/11-copilot-answer-1.png" alt-text="Captura de tela da primeira resposta do Copilot para Microsoft 365 exibida em uma conversa no Microsoft Teams.":::
+   ![Captura de tela da primeira resposta do Copilot para Microsoft 365 exibida em uma conversa no Microsoft Teams.](../media/11-copilot-answer-1.png)
 1. Continue a conversa fazendo uma pergunta de acompanhamento: **para quais idiomas a Microsoft oferece um SDK para o Microsoft Graph?**
-   :::image type="content" source="../media/11-copilot-answer-2.png" alt-text="Captura de tela da segunda resposta do Copilot para Microsoft 365 exibida em uma conversa no Microsoft Teams.":::
+   ![Captura de tela da segunda resposta do Copilot para Microsoft 365 exibida em uma conversa no Microsoft Teams.](../media/11-copilot-answer-2.png)
 1. Mais uma vez, observe que o Copilot responde usando o conteúdo que você ingeriu nos exercícios anteriores.
 
 [Continue no resumo do laboratório...](./7-summary.md)

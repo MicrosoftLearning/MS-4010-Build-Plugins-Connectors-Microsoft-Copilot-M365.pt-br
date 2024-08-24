@@ -10,7 +10,7 @@ Suponha que você tenha um sistema externo onde você armazena artigos da base d
 
 Para expor essas informações externas dentro do Microsoft 365, você criará um conector personalizado do Microsoft Graph. Os conectores do Microsoft Graph se conectam ao seu sistema externo (1) para recuperar conteúdo, usar as informações do Microsoft Entra ID para autenticar com o Microsoft 365 (2) e importar o conteúdo para o Microsoft 365 usando a API do Microsoft Graph (3).
 
-:::image type="content" source="../media/1-graph-connector-concept.png" alt-text="Diagrama que mostra o funcionamento conceitual de um conector do Microsoft Graph.":::
+![Diagrama que mostra o funcionamento conceitual de um conector do Microsoft Graph.](../media/1-graph-connector-concept.png)
 
 Neste módulo, você aprenderá o que são conectores do Microsoft Graph e por que você deve considerar usá-los em sua organização. Você criará um conector do Microsoft Graph que importa arquivos markdown locais para o Microsoft 365. Você também aprenderá sobre como garantir que o conteúdo externo importado seja acessível apenas a indivíduos com permissões atribuídas apropriadas. Por fim, você otimizará o conector do Microsoft Graph para uso com o Copilot para Microsoft 365.
 

@@ -64,12 +64,12 @@ Primeiro, configure uma das páginas que você está importando para ser acessí
 No navegador da Web:
 
 1. Navegue até o portal do Azure em [https://portal.azure.com](https://portal.azure.com) e entre com sua conta corporativa ou de estudante.
-1. Na barra lateral, selecione **Microsoft Entra ID**.
-1. No painel de navegação, selecione **Usuários**.
+1. Na barra lateral, selecione **Exibir** abaixo de **Microsoft Entra ID**.
+1. Na navegação, selecione **Gerenciar** > **Usuários**.
 1. Na lista de usuários, abra um dos usuários selecionando seu nome.
 1. Copie o valor da propriedade **Object ID**.
 
-   :::image type="content" source="../media/8-user.png" alt-text="Captura de tela do portal do Azure com um perfil de usuário aberto.":::
+  ![Captura de tela do portal do Azure com um perfil de usuário aberto.](../media/8-user.png)
 
 Use esse valor para definir uma nova ACL para uma página de Markdown específica.
 
@@ -188,15 +188,7 @@ No editor de código:
 
 Agora, vamos estender o código para que outra página seja acessível apenas por um grupo selecionado de usuários.
 
-No navegador da Web:
-
-1. Navegue até o portal do Azure em [https://portal.azure.com](https://portal.azure.com) e entre com sua conta corporativa ou de estudante.
-1. Na barra lateral, selecione **Microsoft Entra ID**.
-1. No painel de navegação, selecione **Grupos**.
-1. Na lista de grupos, abra um dos grupos selecionando seu nome.
-1. Copie o valor da propriedade **Object Id**.
-
-:::image type="content" source="../media/8-group.png" alt-text="Captura de tela do portal do Azure com uma página de grupo aberta.":::
+![Captura de tela do portal do Azure com uma página de grupo aberta.](../media/8-group.png)
 
 Use esse valor para definir uma nova ACL para uma página de Markdown específica.
 

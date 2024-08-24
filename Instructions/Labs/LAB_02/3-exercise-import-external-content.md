@@ -16,7 +16,7 @@ Este exercício levará cerca de **XX minutos** para ser concluído.
 
 Para seguir este exercício, copie os arquivos de conteúdo de exemplo usados neste exercício no [GitHub](https://pnp.github.io/download-partial/?url=https://github.com/pnp/graph-connectors-samples/tree/main/samples/dotnet-csharp-graphdocs/content) e armazene-os em seu projeto, em uma pasta chamada **conteúdo**.
 
-:::image type="content" source="../media/6-content-files.png" alt-text="Captura de tela de um editor de código mostrando os arquivos de conteúdo usados neste exercício.":::
+![Captura de tela de um editor de código mostrando os arquivos de conteúdo usados neste exercício.](../media/6-content-files.png)
 
 Para que o código funcione corretamente, a pasta **conteúdo** e o conteúdo nela devem ser copiados para a pasta de saída da compilação.
 

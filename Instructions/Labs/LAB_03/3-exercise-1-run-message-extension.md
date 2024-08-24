@@ -34,7 +34,7 @@ SECRET_STORAGE_ACCOUNT_CONNECTION_STRING=UseDevelopmentStorage=true
 
 ## Tarefa 2 – Executar o aplicativo localmente
 
-1. No Visual Studio Code com a **pasta de trabalho** aberta, pressione **F5** para iniciar a depuração ou clique no botão iniciar 1️⃣. 
+1. No Visual Studio Code com a **pasta de trabalho** aberta, pressione **F5** para iniciar a depuração ou clique no botão iniciar 1️⃣.
 
 1. Selecione **Depurar no Teams (Edge)** 2️⃣.
 
@@ -180,9 +180,9 @@ Leia as descrições no JSON acima com ateção ao inserir uma consulta. Tente i
 
 - **_c,beb_** – Encontre produtos em categorias começando com **beb** e nomes que comecem com **c**.
 
-- **_,,sem_** – encontre produtos que estão sem estoque.
+- **_,,fora_** – encontre produtos que estão fora de estoque.
 
-- **_,,on,Londres_** – encontre produtos que estão no pedido de fornecedores em Londres.
+- **_,,em,Londres_** – encontre produtos que estão no pedido de fornecedores em Londres.
 
 - **_tofu,hortifruti,,Osaka_** – encontre produtos na categoria **hortifruti** com fornecedores em **Osaka** e nomes que começam com **tofu**.
 
@@ -200,7 +200,7 @@ Vamos fazer um breve desvio para que você possa ver como as extensões de mensa
 
     ![Captura de tela da criação de um novo e-mail no Outlook.](../media/2-04-test-message-extension-outlook-02.png)
 
-1. Adicione um **destinatário** 1️⃣ e um **assunto** 2️⃣ e, em seguida, posicione o cursor no corpo da mensagem 3️⃣. Você pode até digitar alguma coisa. Quando estiver tudo pronto, selecione o **botão do aplicativo** na barra de ferramentas 4️⃣.
+1. Adicione um **destinatário** 1️⃣ e um **assunto** 2️⃣ e, em seguida, posicione o cursor no corpo da mensagem 3️⃣. Você pode até digitar alguma coisa. Quando estiver pronto, escolha **Inserir** na barra de ferramentas e selecione **Aplicativos** na barra de ferramentas 4️⃣.
 
     ![Captura de tela da seleção do botão do Aplicativo ao redigir uma mensagem do Outlook.](../media/2-04-test-message-extension-outlook-03.png)
 
