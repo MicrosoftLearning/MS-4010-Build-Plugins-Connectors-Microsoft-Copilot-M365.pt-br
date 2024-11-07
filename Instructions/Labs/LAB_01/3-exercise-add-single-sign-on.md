@@ -1,126 +1,103 @@
 ---
 lab:
   title: Exercício 2 – Adicionar logon único
-  module: 'LAB 03: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
+  module: 'LAB 01: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
 ---
 
 # Exercício 2 – Adicionar logon único
 
-Neste exercício, você vai atualizaa a extensão de mensagem para que os usuários sejam solicitados a entrar e autenticar. Você vai configurar o registro do aplicativo de bot do Microsoft Entra e o manifesto do aplicativo para habilitar o logon único. Você vai configurar um registro de aplicativo do Microsoft Entra para autenticar com o Microsoft Graph e atualizar a lógica de extensão de mensagem para obter um token de acesso usando o Serviço de token Bot Framework. Depois, você vai executar e depurar a extensão de mensagem para testar no Microsoft Teams.
+Neste exercício, você adicionará o logon único à extensão de mensagem para autenticar consultas de usuário.
 
-## Tarefa 1 – Configurar o logon único
+![Captura de tela de um desafio de autenticação em uma extensão de mensagem baseada em pesquisa. Um link para entrar é exibido.](../media/2-sign-in.png)
 
-Primeiro, configure um registro do aplicativo de bot do Microsoft Entra.
+### Duração do exercício
 
-No Visual Studio:
+  - **Tempo estimado para conclusão:** 40 minutos
 
-1. Na pasta **infra\entra**, abra o arquivo chamado **entra.bot.manifest.json**
-1. No arquivo, atualize a matriz **identifierUris** para definir o URI da ID do aplicativo
+## Tarefa 1 – Configurar o registro do aplicativo da API de back-end
 
-    ```json
-    "identifierUris": [
-        "api://${{BOT_DOMAIN}}/botid-${{BOT_ID}}"
-    ],
+Primeiro, crie um registro de aplicativo do Microsoft Entra para a API de back-end. Para os fins deste exercício, você criará um novo; no entanto, em um ambiente de produção, você usaria um registro de aplicativo existente.
+
+Em uma janela do navegador:
+
+1. Navegue até o [Portal do Azure](https://portal.azure.com).
+
+1. Abra o menu do portal e selecione **Microsoft Entra ID**.
+
+1. Escolha **Gerenciar > Registros de aplicativo** e selecione **Novo registro**.
+
+1. No formulário Registrar um aplicativo, especifique os seguintes valores:
+
+    1. **Nome**: API de produtos
+
+    1. **Tipos de conta de suporte**: contas em qualquer diretório organizacional (Qualquer locatário do Microsoft Entra ID – Multilocatário)
+
+1. Selecione **Registrar** para criar o registro do aplicativo.
+
+1. No menu de registro do aplicativo à esquerda, selecione **Gerenciar > Expor uma API**.
+
+1. Ao lado de **URI da ID do Aplicativo**, selecione **Adicionar** e **Salvar** para criar um novo URI da ID do Aplicativo.
+
+1. Na seção Escopos definidos por esta API, selecione **Adicionar um escopo**.
+
+1. No formulário Adicionar um escopo, especifique os seguintes valores.
+
+    1. **Nome do escopo**: Product.Read
+
+    1. **Quem pode consentir?**: Administradores e usuários
+
+    1. **Nome de exibição do consentimento do administrador**: Ler produtos
+
+    1. **Descrição do consentimento do administrador**: Permite que o aplicativo leia os dados do produto
+
+    1. **Nome de exibição do consentimento do usuário**: Ler produtos
+
+    1. **Descrição do consentimento do usuário**: permite que o aplicativo leia os dados do produto
+
+    1. **Estado**: Habilitado
+
+1. Clique em **Adicionar escopo** para criar o escopo.
+
+Em seguida, anote a ID de registro do aplicativo e a ID do escopo. Você precisa desses valores para configurar o registro do aplicativo usado para obter um token de acesso para a API de back-end.
+
+1. No menu de registro de aplicativo à esquerda, selecione **Manifesto**.
+
+1. Copie o valor da propriedade **appId** e salve-o para uso posterior.
+
+1. Copie o valor da propriedade **oauth2Permissions.id** e salve-o para uso posterior.
+
+Como precisamos desses valores no projeto, adicione-os ao arquivo de ambiente.
+
+No Visual Studio e no projeto **TeamsApp**:
+
+1. Na pasta **env**, abra **.env.local**.
+
+1. No arquivo, adicione as seguintes variáveis de ambiente e defina os valores para a **ID de registro do aplicativo** e a **ID do escopo** que você salvou anteriormente:
+
+    ```text
+    BACKEND_API_ENTRA_APP_ID=<app-registration-id>
+    BACKEND_API_ENTRA_APP_SCOPE_ID=<scope-id>
     ```
 
-1. No arquivo, atualize a matriz **oauth2Permissions** para criar um escopo para permitir que o Teams chame APIs da Web como administrador ou usuário:
+1. Salve suas alterações.
 
-    ```json
-      "oauth2Permissions": [
-        {
-          "adminConsentDescription": "Allows Teams to call the app's web APIs as the current user.",
-          "adminConsentDisplayName": "Teams can access app's web APIs",
-          "id": "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}",
-          "isEnabled": true,
-          "type": "User",
-          "userConsentDescription": "Enable Teams to call this app's web APIs with the same rights that you have",
-          "userConsentDisplayName": "Teams can access app's web APIs and make requests on your behalf",
-          "value": "access_as_user"
-        }
-      ]
-    ```
+## Tarefa 2 – Criar um arquivo de manifesto de registro de aplicativo para autenticação com a API de back-end
 
-1. No arquivo, atualize a matriz **preAuthorizedApplications** para adicionar o Microsoft Teams, Microsoft Outlook e Copilot para clientes do Microsoft 365 à lista de clientes autorizados:
+Para autenticar com a API de back-end, você precisa de um registro de aplicativo para obter um token de acesso para chamar a API.
 
-    ```json
-      "preAuthorizedApplications": [
-        {
-          "appId": "1fec8e78-bce4-4aaf-ab1b-5451cc387264",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "5e3ce6c0-2b1f-4285-8d4b-75ee78787346",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "4765445b-32c6-49b0-83e6-1d93765276ca",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "0ec893e0-5785-4de6-99da-4ed124e5296c",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "d3590ed6-52b3-4102-aeff-aad2292ab01c",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "bc59ab01-8403-45c6-8796-ac3ef710b3e3",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        },
-        {
-          "appId": "27922004-5251-4030-b22d-91ecd9a37ea4",
-          "permissionIds": [
-            "${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}}"
-          ]
-        }
-      ],
-    ```
+Em seguida, crie um arquivo de manifesto de registro de aplicativo. O manifesto define os escopos de permissão da API e o URI de redirecionamento no registro do aplicativo.
 
-1. Salvar suas alterações
+No Visual Studio e no projeto **TeamsApp**:
 
-Em seguida, atualize o arquivo de manifesto do aplicativo para definir o recurso que o cliente deve usar ao iniciar um fluxo de logon único no aplicativo.
+1. Na pasta **infra\entra**, crie um novo arquivo (<kbd>Ctrl+Shift+A</kbd>) chamado **entra.products.api.manifest.json**.
 
-Continuando no Visual Studio:
-
-1. Na pasta **appPackage**, abra o arquivo chamado **manifest.json**
-1. No arquivo, adicione o seguinte código após a **descrição**:
-
-    ```json
-    "webApplicationInfo": {
-      "id": "${{BOT_ID}}",
-      "resource": "api://${{BOT_DOMAIN}}/botid-${{BOT_ID}}"
-    },
-    ```
-
-1. Salvar suas alterações
-
-## Tarefa 2 – Criar arquivo de manifesto de registro do aplicativo do Microsoft Entra para o Microsoft Graph
-
-Para autenticar com o Microsoft Graph, crie um novo arquivo de manifesto de registro do aplicativo.
-
-Continuando no Visual Studio:
-
-1. Na pasta **infra\entra**, crie um arquivo chamado **entra.graph.manifest.json**
-2. No arquivo , adicione o seguinte código:
+1. No arquivo , adicione o seguinte código:
 
     ```json
     {
-      "id": "${{GRAPH_ENTRA_APP_OBJECT_ID}}",
-      "appId": "${{GRAPH_ENTRA_APP_ID}}",
-      "name": "${{APP_INTERNAL_NAME}}-graph-${{TEAMSFX_ENV}}",
+      "id": "${{PRODUCTS_API_ENTRA_APP_OBJECT_ID}}",
+      "appId": "${{PRODUCTS_API_ENTRA_APP_ID}}",
+      "name": "${{APP_INTERNAL_NAME}}-product-api-${{TEAMSFX_ENV}}",
       "accessTokenAcceptedVersion": 2,
       "signInAudience": "AzureADMultipleOrgs",
       "optionalClaims": {
@@ -137,10 +114,10 @@ Continuando no Visual Studio:
       },
       "requiredResourceAccess": [
         {
-          "resourceAppId": "Microsoft Graph",
+          "resourceAppId": "${{BACKEND_API_ENTRA_APP_ID}}",
           "resourceAccess": [
             {
-              "id": "Sites.ReadWrite.All",
+              "id": "${{BACKEND_API_ENTRA_APP_SCOPE_ID}}",
               "type": "Scope"
             }
           ]
@@ -158,70 +135,85 @@ Continuando no Visual Studio:
     }
     ```
 
-1. Salvar suas alterações
+1. Salve suas alterações.
 
-A matriz **requiredResourceAccess** define os escopos de permissão da API e a matriz **replyUrlsWithType** define os URIs de redirecionamento no registro do aplicativo.
+A propriedade **requiredResourceAccess** especifica a ID de registro do aplicativo e a ID de escopo da API de back-end.
 
-Agora atualize o arquivo de projeto com ações para criar o registro do aplicativo.
+A propriedade **replyUrlsWithType** especifica o URI de redirecionamento usado pelo Serviço de Token do Bot Framework para retornar o token de acesso ao serviço de token após o usuário se autenticar.
 
-1. Na pasta raiz do projeto, abra **teamsapp.local.yml**
-1. No arquivo, localize a etapa que usa a ação **arm/deploy**
-1. Antes da etapa, adicione o código a seguir:
+Em seguida, atualize o fluxo de trabalho automatizado para criar e atualizar o registro do aplicativo.
+
+No projeto **TeamsApp**:
+
+1. Abra **teamsapp.local.yml**.
+
+1. No arquivo, localize a etapa que usa a ação **aadApp/update**.
+
+1. Após a ação, adicione as ações **aadApp/create** e **aadApp/update** para criar e atualizar o registro do aplicativo (começando na **linha 31**):
 
     ```yml
       - uses: aadApp/create
         with:
-          name: ${{APP_INTERNAL_NAME}}-graph-${{TEAMSFX_ENV}}
-          generateClientSecret: true
-          signInAudience: AzureADMultipleOrgs
+            name: ${{APP_INTERNAL_NAME}}-products-api-${{TEAMSFX_ENV}}
+            generateClientSecret: true
+            signInAudience: AzureADMultipleOrgs
         writeToEnvironmentFile:
-          clientId: GRAPH_ENTRA_APP_ID
-          clientSecret: SECRET_GRAPH_ENTRA_APP_CLIENT_SECRET
-          objectId: GRAPH_ENTRA_APP_OBJECT_ID
-          tenantId: GRAPH_ENTRA_APP_TENANT_ID
-          authority: GRAPH_ENTRA_APP_OAUTH_AUTHORITY
-          authorityHost: GRAPH_ENTRA_APP_OAUTH_AUTHORITY_HOST
+            clientId: PRODUCTS_API_ENTRA_APP_ID
+            clientSecret: SECRET_PRODUCTS_API_ENTRA_APP_CLIENT_SECRET
+            objectId: PRODUCTS_API_ENTRA_APP_OBJECT_ID
+            tenantId: PRODUCTS_API_ENTRA_APP_TENANT_ID
+            authority: PRODUCTS_API_ENTRA_APP_OAUTH_AUTHORITY
+            authorityHost: PRODUCTS_API_ENTRA_APP_OAUTH_AUTHORITY_HOST
     
       - uses: aadApp/update
         with:
-          manifestPath: "./infra/entra/entra.graph.manifest.json"
-          outputFilePath : "./build/entra.graph.manifest.${{TEAMSFX_ENV}}.json"
+            manifestPath: "./infra/entra/entra.products.api.manifest.json"
+            outputFilePath : "./infra/entra/build/entra.products.api.${{TEAMSFX_ENV}}.json"
     ```
 
 1. Salvar suas alterações
 
-## Tarefa 3 – Criar configuração de conexão OAuth
+A ação **aadApp/create** criará um novo registro de aplicativo com o nome e o público-alvo especificados e gerará um segredo do cliente. A propriedade **writeToEnvironmentFile** gravará a ID de registro do aplicativo, o segredo do cliente, a ID do objeto, a ID do locatário, a autoridade e o host de autoridade nos arquivos do ambiente. O segredo do cliente será criptografado e armazenado com segurança no arquivo **env.local.user**. O nome da variável de ambiente do segredo do cliente é prefixado com **SECRET_**; ele informará ao Kit de ferramenta do Teams para não gravar o valor nos logs.
 
-As configurações de conexão do Serviço de Bot de IA do Azure são usadas para gerenciar a autenticação do usuário em bots e extensões de mensagem.
+A ação **aadApp/update** atualizará o registro do aplicativo com o arquivo de manifesto especificado.
 
-Primeiro, centralize o nome da configuração de conexão OAuth usada para criar a configuração de conexão como uma variável de ambiente e, em seguida, adicione código para usar o valor da variável de ambiente em tempo de execução.
+## Tarefa 3 – Centralizar o nome da configuração de conexão
 
-Continuando no Visual Studio:  
+Em seguida, centralize o nome da configuração de conexão no arquivo de ambiente e atualize a configuração do aplicativo para acessar o valor da variável de ambiente no runtime.
 
-1. Na pasta **env**, abra **.env.local**
+Continuando no Visual Studio e no projeto **TeamsApp**:
+
+1. Na pasta **env**, abra **.env.local**.
+
 1. No arquivo , adicione o seguinte código:
 
     ```text
-    CONNECTION_NAME=MicrosoftGraph
+    CONNECTION_NAME=ProductsAPI
     ```
 
-1. Na pasta raiz do projeto, abra o arquivo chamado **teamsapp.local.yml**
-1. No arquivo, localize a etapa que usa a ação **file/createOrUpdateJsonFile** direcionada ao arquivo **./appsettings.Development.json**
-1. Atualize a matriz de conteúdo, adicionando a variável **CONNECTION_NAME**
+1. Abra **teamsapp.local.yml**.
+
+1. No arquivo, localize a etapa que usa a ação **file/createOrUpdateJsonFile** direcionada ao arquivo **./appsettings.Development.json**. Atualize a matriz de conteúdo para incluir a variável de ambiente **CONNECTION_NAME** e grave o valor no arquivo **appsettings.Development.json**.
 
     ```yml
       - uses: file/createOrUpdateJsonFile
         with:
-          target: ./appsettings.Development.json
+          target: ../ProductsPlugin/appsettings.Development.json
           content:
             BOT_ID: ${{BOT_ID}}
             BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
             CONNECTION_NAME: ${{CONNECTION_NAME}}
     ```
 
-1. Salvar suas alterações
-1. Na pasta raiz do projeto, abra o arquivo **Config.cs**
-1. Na classe **ConfigOptions**, adicione uma nova propriedade de cadeia de caracteres com o nome **CONNECTION_NAME**
+1. Salve suas alterações.
+
+Em seguida, atualize a configuração do aplicativo para acessar a variável de ambiente **CONNECTION_NAME**.
+
+No projeto **ProductsPlugin**:
+
+1. Abra **Config.cs**.
+
+1. Na classe **ConfigOptions**, adicione uma nova propriedade chamada **CONNECTION_NAME**:
 
     ```csharp
     public class ConfigOptions
@@ -232,52 +224,47 @@ Continuando no Visual Studio:
     }
     ```
 
-1. Salvar suas alterações
-1. Na pasta raiz do projeto, abra o arquivo chamado **Program.cs**
-1. No arquivo, adicione uma nova linha para adicionar a variável de ambiente **CONNECTION_NAME** como uma definição de configuração do aplicativo:
+1. Salve suas alterações.
+
+1. Abra **Program.cs**.
+
+1. No arquivo, atualize o código que lê a configuração do aplicativo para incluir a propriedade **CONNECTION_NAME**:
 
     ```csharp
     var config = builder.Configuration.Get<ConfigOptions>();
     builder.Configuration["MicrosoftAppType"] = "MultiTenant";
     builder.Configuration["MicrosoftAppId"] = config.BOT_ID;
     builder.Configuration["MicrosoftAppPassword"] = config.BOT_PASSWORD;
-    builder.Configuration["CONNECTION_NAME"] = config.CONNECTION_NAME;
+    builder.Configuration["ConnectionName"] = config.CONNECTION_NAME;
     ```
 
-Em seguida, atualize o Manipulador de Atividades do Bot para acessar a configuração do aplicativo.
+1. Salve suas alterações.
 
-1. Na pasta **Pesquisar**, abra o arquivo chamado **SearchApp.cs**
-1. Na classe **SearchApp**, crie uma propriedade de cadeia de caracteres somente leitura com o nome **connectionName**.
+Em seguida, atualize o código do bot para usar o nome da configuração de conexão no tempo de execução.
+
+1. Na pasta **Pesquisar**, abra **SearchApp.cs**.
+
+1. No início da classe **SearchApp**, crie um construtor que aceite um objeto **IConfiguration** e atribua o valor da propriedade **CONNECTION_NAME** a um campo privado chamado **connectionName**:
 
     ```csharp
-    public class SearchApp : TeamsActivityHandler
+    private readonly string connectionName;
+    public SearchApp(IConfiguration configuration)
     {
-      private readonly string connectionName;
-    }
+      connectionName = configuration["CONNECTION_NAME"];
+    }  
     ```
 
-1. Crie um construtor, que injeta a configuração do aplicativo e define o valor da propriedade connectionName.
+1. Salve suas alterações.
 
-    ```csharp
-    public class SearchApp : TeamsActivityHandler
-    {
-      private readonly string connectionName;
-    
-      public SearchApp(IConfiguration configuration)
-      {
-        connectionName = configuration["CONNECTION_NAME"];
-      }  
-    }
-    ```
+## Tarefa 4 – Definir a configuração de conexão da API de Produtos
 
-1. Salvar suas alterações
+Para autenticar com a API de back-end, você precisa definir uma configuração de conexão no recurso do Bot do Azure.
 
-Em seguida, atualize os arquivos Bicep para provisionar a configuração de conexão OAuth.
+Continuando no Visual Studio e no projeto **TeamsApp**:
 
-Primeiro, atualize o arquivo de parâmetros para passar as credenciais do registro do aplicativo Microsoft Entra do Microsoft Graph e o nome da configuração de conexão.
+1. Na pasta **infra**, abra **azure.parameters.local.json**.
 
-1. Na pasta **infra**, abra o arquivo chamado **azure.parameters.local.json**
-1. No objeto **parameters**, adicione os parâmetros **graphEntraAppClientId**, **graphEntraAppClientSecret** e **connectionName**
+1. No arquivo, adicione os parâmetros **backendApiEntraAppClientId**, **productsApiEntraAppClientId**, **productsApiEntraAppClientSecret** e **connectionName**:
 
     ```json
     {
@@ -296,11 +283,14 @@ Primeiro, atualize o arquivo de parâmetros para passar as credenciais do regist
         "botAppDomain": {
           "value": "${{BOT_DOMAIN}}"
         },
-        "graphEntraAppClientId": {
-          "value": "${{GRAPH_ENTRA_APP_ID}}"
+        "backendApiEntraAppClientId": {
+          "value": "${{BACKEND_API_ENTRA_APP_ID}}"
         },
-        "graphEntraAppClientSecret": {
-          "value": "${{SECRET_GRAPH_ENTRA_APP_CLIENT_SECRET}}"
+        "productsApiEntraAppClientId": {
+          "value": "${{PRODUCTS_API_ENTRA_APP_ID}}"
+        },
+        "productsApiEntraAppClientSecret": {
+          "value": "${{SECRET_PRODUCTS_API_ENTRA_APP_CLIENT_SECRET}}"
         },
         "connectionName": {
           "value": "${{CONNECTION_NAME}}"
@@ -309,32 +299,35 @@ Primeiro, atualize o arquivo de parâmetros para passar as credenciais do regist
     }
     ```
 
-1. Salvar suas alterações
+1. Salve suas alterações.
 
-Depois, atualize o arquivo Bicep.
+Em seguida, atualize o arquivo Bicep para incluir os novos parâmetros e passá-los para o recurso de Bot do Azure.
 
-1. Na pasta **infra**, abra o arquivo chamado **azure.local.bicep**
-1. No arquivo, após a declaração de parâmetro **botAppDomain**, adicione as declarações de parâmetro **graphEntraAppClientId**, **graphEntraAppClientSecret** e **connectionName**
+1. Na pasta **infra**, abra o arquivo chamado **azure.local.bicep**.
+
+1. No arquivo, após a declaração do parâmetro **botAppDomain**, adicione as declarações dos parâmetros **backendApiEntraAppClientId**, **productsApiEntraAppClientId**, **productsApiEntraAppClientSecret** e **connectionName**:
 
     ```bicep
-    param graphEntraAppClientId string
+    param backendApiEntraAppClientId string
+    param productsApiEntraAppClientId string
     @secure()
-    param graphEntraAppClientSecret string
+    param productsApiEntraAppClientSecret string
     param connectionName string
     ```
 
-1. No módulo **azureBotRegistration**, adicione os parâmetros **graphEntraAppClientId**, **graphEntraAppClientSecret** e **connectionName**
+1. Na declaração do módulo **azureBotRegistration**, adicione os novos parâmetros:
 
     ```bicep
     module azureBotRegistration './botRegistration/azurebot.bicep' = {
       name: 'Azure-Bot-registration'
       params: {
         resourceBaseName: resourceBaseName
-        botAadAppClientId: botEntraAppClientId
+        botEntraAppClientId: botEntraAppClientId
         botAppDomain: botAppDomain
         botDisplayName: botDisplayName
-        graphEntraAppClientId: graphEntraAppClientId
-        graphEntraAppClientSecret: graphEntraAppClientSecret
+        backendApiEntraAppClientId: backendApiEntraAppClientId
+        productsApiEntraAppClientId: productsApiEntraAppClientId
+        productsApiEntraAppClientSecret: productsApiEntraAppClientSecret
         connectionName: connectionName
       }
     }
@@ -342,31 +335,33 @@ Depois, atualize o arquivo Bicep.
 
 1. Salve suas alterações.
 
-Por fim, atualize o arquivo Bicep de registro do bot.
+Por fim, atualize o arquivo Bicep de registro do bot para incluir a nova configuração de conexão.
 
-1. Na pasta **infra/botRegistration**, abra o arquivo chamado **azurebot.bicep**
-1. No arquivo, após a declaração de parâmetro **botAppDomain**, adicione as declarações de parâmetro **graphEntraAppClientId**, **graphEntraAppClientSecret** e **connectionName**
+1. Na pasta **infra/botRegistration**, abra **azurebot.bicep**.
+
+1. No arquivo, após a declaração do parâmetro **botAppDomain**, adicione as declarações dos parâmetros **backendApiEntraAppClientId**, **productsApiEntraAppClientId**, **productsApiEntraAppClientSecret** e **connectionName** :
 
     ```bicep
-    param graphEntraAppClientId string
+    param backendApiEntraAppClientId string
+    param productsApiEntraAppClientId string
     @secure()
-    param graphEntraAppClientSecret string
+    param productsApiEntraAppClientSecret string
     param connectionName string
     ```
 
-1. Após o recurso **botServiceM365ExtensionsChannel** , adicione um novo recurso para a conexão do Microsoft Graph
+1. No arquivo, adicione um novo recurso chamado **botServicesProductsApiConnection** ao final do arquivo:
 
     ```bicep
-    resource botServicesMicrosoftGraphConnection 'Microsoft.BotService/botServices/connections@2022-09-15' = {
+    resource botServicesProductsApiConnection 'Microsoft.BotService/botServices/connections@2022-09-15' = {
       parent: botService
       name: connectionName
       location: 'global'
       properties: {
         serviceProviderDisplayName: 'Azure Active Directory v2'
         serviceProviderId: '30dd229c-58e3-4a48-bdfd-91ec48eb906c'
-        clientId: graphEntraAppClientId
-        clientSecret: graphEntraAppClientSecret
-        scopes: 'email offline_access openid profile Sites.ReadWrite.All'
+        clientId: productsApiEntraAppClientId
+        clientSecret: productsApiEntraAppClientSecret
+        scopes: 'api://${backendApiEntraAppClientId}/Product.Read'
         parameters: [
           {
             key: 'tenantID'
@@ -374,23 +369,87 @@ Por fim, atualize o arquivo Bicep de registro do bot.
           }
           {
             key: 'tokenExchangeUrl'
-            value: 'api://${botAppDomain}/botid-${ botAadAppClientId}'
+            value: 'api://${botAppDomain}/botid-${botEntraAppClientId}'
           }
         ]
       }
     }
     ```
 
-1. Salvar suas alterações
+1. Salve suas alterações.
 
-## Tarefa 4 – Autenticar consultas do usuário
+## Tarefa 5 – Configurar a autenticação na extensão de mensagem
 
-Em seguida, adicione código para autenticar usuários quando eles iniciarem uma pesquisa usando a extensão de mensagem.
+Para autenticar consultas de usuário na extensão de mensagem, use o SDK do Bot Framework para obter um token de acesso para o usuário pelo Serviço de Token do Bot Framework. O token de acesso pode ser usado para acessar dados a partir de um serviço externo.
 
-Continuando no Visual Studio:
+Para simplificar o código, crie uma classe auxiliar que processe a autenticação do usuário.
 
-1. Na pasta **Pesquisar**, abra o arquivo chamado **SearchApp.cs**
-1. No arquivo, comece adicionando o namespace **Autenticação** a partir do SDK do Bot Framework.
+Continuando no Visual Studio e no projeto **ProductsPlugin**:
+
+1. Crie uma pasta chamada **Auxiliares**.
+
+1. Na pasta **Auxiliares**, crie um novo arquivo de classe chamado **AuthHelpers.cs**
+
+1. No arquivo , adicione o seguinte código:
+
+    ```csharp
+    using Microsoft.Bot.Connector.Authentication;
+    using Microsoft.Bot.Schema;
+    using Microsoft.Bot.Schema.Teams;
+    internal static class AuthHelpers
+    {
+        internal static async Task<MessagingExtensionResponse> CreateAuthResponse(UserTokenClient userTokenClient, string connectionName, Activity activity, CancellationToken cancellationToken)
+        {
+            var resource = await userTokenClient.GetSignInResourceAsync(connectionName, activity, null, cancellationToken);
+            return new MessagingExtensionResponse
+            {
+                ComposeExtension = new MessagingExtensionResult
+                {
+                    Type = "auth",
+                    SuggestedActions = new MessagingExtensionSuggestedAction
+                    {
+                        Actions = [
+                            new() {
+                                Type = ActionTypes.OpenUrl,
+                                Value = resource.SignInLink,
+                                Title = "Sign In",
+                            },
+                        ],
+                    },
+                },
+            };
+        }
+        internal static async Task<TokenResponse> GetToken(UserTokenClient userTokenClient, string state, string userId, string channelId, string connectionName, CancellationToken cancellationToken)
+        {
+            var magicCode = string.Empty;
+            if (!string.IsNullOrEmpty(state))
+            {
+                if (int.TryParse(state, out var parsed))
+                {
+                    magicCode = parsed.ToString();
+                }
+            }
+            return await userTokenClient.GetUserTokenAsync(userId, connectionName, channelId, magicCode, cancellationToken);
+        }
+        internal static bool HasToken(TokenResponse tokenResponse) => tokenResponse != null && !string.IsNullOrEmpty(tokenResponse.Token);
+    }
+    ```
+
+1. Salve suas alterações.
+
+Os três métodos auxiliares na classe **AuthHelpers** manipulam a autenticação do usuário na extensão de mensagem.
+
+- O método **CreateAuthResponse** constrói uma resposta que renderiza um link de entrada na interface do usuário. O link de entrada é recuperado no serviço de token usando o método **GetSignInResourceAsync**.
+
+- O método **GetToken** usa o cliente do serviço de token para obter um token de acesso para o usuário atual. O método usa um código mágico para verificar a autenticidade da solicitação.
+
+- O método **HasToken** verifica se a resposta do serviço de token contém um token de acesso. Se o token não for nulo ou vazio, o método retornará true.
+
+Em seguida, atualize o código de extensão de mensagem para usar os métodos auxiliares para autenticar consultas de usuário.
+
+1. Na pasta **Pesquisar**, abra **SearchApp.cs**.
+
+1. Na parte superior do arquivo, adicione a seguinte instrução using:
 
     ```csharp
     using Microsoft.Bot.Connector.Authentication;
@@ -400,134 +459,85 @@ Continuando no Visual Studio:
 
     ```csharp
     var userTokenClient = turnContext.TurnState.Get<UserTokenClient>();
-    var tokenResponse = await GetToken(userTokenClient, query.State, turnContext.Activity.From.Id, turnContext.Activity.ChannelId, connectionName, cancellationToken);
-    
-    if (!HasToken(tokenResponse))
+    var tokenResponse = await AuthHelpers.GetToken(userTokenClient, query.State, turnContext.Activity.From.Id, turnContext.Activity.ChannelId, connectionName, cancellationToken);
+    if (!AuthHelpers.HasToken(tokenResponse))
     {
-        return await CreateAuthResponse(userTokenClient, connectionName, (Activity)turnContext.Activity, cancellationToken);
+        return await AuthHelpers.CreateAuthResponse(userTokenClient, connectionName, (Activity)turnContext.Activity, cancellationToken);
     }
     ```
 
-O bloco de códigos acima usa três métodos que gerenciam a autenticação do usuário.
+1. Salve suas alterações.
 
-- **GetToken** usa o cliente do serviço de token para obter um token de acesso para o usuário atual
-- **HasToken** verifica se a resposta do serviço de token contém um token de acesso
-- **CreateAuthResponse** é chamado se nenhum token for retornado e retorna uma resposta, que exibe um link de entrada na interface do usuário
+Em seguida, adicione o domínio do Serviço de Token ao arquivo de manifesto do aplicativo para garantir que o cliente possa confiar no domínio ao iniciar um fluxo de logon único.
 
-Agora, crie os métodos na classe **SearchApp**.
+No projeto **TeamsApp**:
 
-- Crie o método **GetToken** usando o seguinte código:
+1. Na pasta **appPackage**, abra o arquivo **manifest.json**.
 
-```csharp
-private static async Task<TokenResponse> GetToken(UserTokenClient userTokenClient, string state, string userId, string channelId, string connectionName, CancellationToken cancellationToken)
-{
-  var magicCode = string.Empty;
-
-  if (!string.IsNullOrEmpty(state))
-  {
-    if (int.TryParse(state, out var parsed)) 
-    {
-        magicCode = parsed.ToString();
-    }
-  }
-
-  return await userTokenClient.GetUserTokenAsync(userId, connectionName, channelId, magicCode, cancellationToken);
-}
-```
-
-Primeiro verifique se o parâmetro de estado não é nulo ou vazio. O código tentará analisá-lo como um número inteiro usando o método int.TryParse. Se a análise for bem-sucedida, o valor analisado será atribuído à variável magicCode como uma cadeia de caracteres. A variável magicCode então é passada como um argumento para o método GetUserTokenAsync junto com outros parâmetros. O método GetUserTokenAsync usa a variável magicCode para verificar a autenticidade da solicitação, garantindo que o token de usuário seja solicitado pela mesma entidade que iniciou o processo de autenticação.
-
-- Crie o método HasToken usando o código a seguir:
-
-```csharp
-private static bool HasToken(TokenResponse tokenResponse)
-{
-    return tokenResponse != null && !string.IsNullOrEmpty(tokenResponse.Token);
-}
-```
-
-Verifique se um token válido é obtido do serviço de token verificando se a resposta do token e a propriedade Token na resposta não é vazia ou nula.
-
-- Crie o método **CreateAuthResponse** usando o seguinte código:
-
-```csharp
-private static async Task<MessagingExtensionResponse> CreateAuthResponse(UserTokenClient userTokenClient, string connectionName, Activity activity, CancellationToken cancellationToken)
-{
-    var resource = await userTokenClient.GetSignInResourceAsync(connectionName, activity, null, cancellationToken);
-
-    return new MessagingExtensionResponse
-    {
-        ComposeExtension = new MessagingExtensionResult
-        {
-            Type = "auth",
-            SuggestedActions = new MessagingExtensionSuggestedAction
-            {
-                Actions = new List<CardAction>
-                {
-                    new() {
-                        Type = ActionTypes.OpenUrl,
-                        Value = resource.SignInLink,
-                        Title = "Sign In",
-                    },
-                },
-            },
-        },
-    };
-}
-```
-
-Primeiro, use o método **GetSignInResourceAsync** para recuperar o link de entrada do serviço de token. O link de entrada é usado para construir um objeto **MessagingExtensionResponse**. Crie um novo objeto e defina a propriedade **ComposeExtension** da resposta para um novo objeto **MessagingExtensionResult**. A propriedade type do resultado é definida como "auth", indicando que o resultado é uma resposta de autenticação. A propriedade **SuggestedActions** do resultado é definida como um novo objeto **MessagingExtensionSuggestedAction**. A propriedade Actions das ações sugeridas é definida como uma lista que contém um único objeto **CardAction**. Esse objeto **CardAction** representa uma ação que pode ser executada pelo usuário. A propriedade Type de **CardAction** é definida como **ActionTypes.OpenUrl**, indicando que é uma ação que abre uma URL. A propriedade Value é definida como o link de entrada recuperado do recurso. A propriedade Title é definida como "Entrada", que especifica o título da ação. Por fim, a resposta construída é retornada do método.
-
-Ao seguir o link de entrada, o usuário chega a um recurso hospedado em um domínio externo. O domínio deve ser incluído no arquivo de manifesto do aplicativo. Adicione o domínio do Serviço de Token do Bot Framework ao manifesto do aplicativo.
-
-Continuando no Visual Studio:
-
-1. Na pasta **appPackage**, abra o arquivo **manifest.json**
 1. No arquivo, atualize a matriz **validDomains** e adicione o domínio do serviço de token:
 
     ```json
     "validDomains": [
         "token.botframework.com",
         "${{BOT_DOMAIN}}"
-    ]    
+    ]
     ```
 
-1. Salvar suas alterações
+1. Salve suas alterações.
 
-## Tarefa 5 – Provisionar os recursos
+## Tarefa 6 – Criar e atualizar recursos
 
-Agora com tudo pronto, execute o processo Preparar dependências do aplicativo do Teams para provisionar os recursos necessários.
+Feito tudo isso, execute o processo **Preparar dependências do aplicativo Teams** para criar novos recursos e atualizar os já existentes.
+
+> [!NOTE]
+> Se o provisionamento não conseguir preparar as dependências, verifique se você tem os valores corretos para **BACKEND_API_ENTRA_APP_ID** e **BACKEND_API_ENTRA_APP_SCOPE_ID** em **env.local**.
 
 Continuando no Visual Studio:
 
 1. No **Gerenciador de Soluções**, clique com o botão direito do mouse no projeto **TeamsApp**.
-1. Expanda o menu Kit de Ferramentas** do Teams**, selecione **Preparar dependências do aplicativo Teams**
-1. Na caixa de diálogo **Conta do Microsoft 365**, selecione **Continuar**
-1. Na caixa de diálogo **Provisionar**, selecione **Provisionar**
-1. Na caixa de diálogo de **aviso do Kit de Ferramentas do Teams**, selecione **Provisionar**
-1. Na caixa de diálogo de **informações do kit de ferramentas do Microsoft Teams**, selecione **Exibir recursos provisionados** para abrir uma nova janela do navegador.
 
-Tire um momento para explorar os recursos criados e atualizados no Azure.
+1. Expanda o menu **Kit de Ferramentas do Teams** e selecione **Preparar dependências do aplicativo Teams**.
 
-## Tarefa 6 – Executar e depurar
+1. Na caixa de diálogo **Conta do Microsoft 365**, clique em **Continuar**.
 
-Agora inicie o serviço Web e teste a extensão de mensagem no Microsoft Teams.
+1. Na caixa de diálogo **Provisionar**, clique em **Provisionar**.
 
-Continuando no Visual Studio:
+1. Na caixa de diálogo de **aviso do Kit de Ferramentas do Teams**, clique em **Provisionar**.
 
-1. Aperte **F5** para iniciar uma sessão de depuração e abrir uma nova janela do navegador que navega até o cliente Web do Microsoft Teams.
-1. No navegador e, se necessário, insira suas credenciais da conta do Microsoft 365 e continue no Microsoft Teams.
-1. Na caixa de diálogo de instalação do aplicativo, selecione **Adicionar**
-1. Abra um bate-papo novo ou já existente do Microsoft Teams
-1. Na área de redigir mensagem, selecione **...** para abrir o submenu do aplicativo
-1. Na lista de aplicativos, selecione **produtos da Contoso** para abrir a extensão de mensagem
-1. Na caixa de texto, digite **Bot Builder** para iniciar uma pesquisa
-1. A mensagem mensagem **Você precisará entrar para usar este aplicativo** será exibida
-1. Selecione o **link de entrada** para abrir uma nova guia e iniciar o fluxo de autenticação
-1. Na página de consentimento de permissões, revise as permissões que estão sendo solicitadas.
-1. Selecione **Aceitar** para fechar a guia e retornar ao Microsoft Teams
-1. Na lista de resultados, **clique em um resultado** para inserir um cartão na caixa de redigir mensagem e envie.
+1. Na caixa de diálogo de **informações do Kit de Ferramentas do Teams**, clique no ícone de cruz para fechar a caixa de diálogo.
 
-Feche o navegador para interromper a sessão de depuração.
+## Tarefa 7 – Executar e depurar
 
-[Continue no próximo exercício...](./4-exercise-retrieve-product-information-from-sharepoint-online.md)
+Com os recursos provisionados, inicie uma sessão de depuração para testar a extensão da mensagem.
+
+1. Para iniciar uma nova sessão de depuração, pressione <kbd>F5</kbd> ou clique em **Iniciar** na barra de ferramentas.
+
+1. Aguarde até que uma janela do navegador seja aberta e a caixa de diálogo de instalação do aplicativo apareça no cliente Web do Microsoft Teams. Se solicitado, insira as credenciais da sua conta do Microsoft 365.
+
+1. Na caixa de diálogo de instalação do aplicativo, selecione **Adicionar**.
+
+1. Abra um bate-papo novo ou já existente do Microsoft Teams.
+
+1. Na área de composição da mensagem, comece a digitar **/apps** para abrir o seletor de aplicativo.
+
+1. Na lista de aplicativos, selecione **Produtos da Contoso** para abrir a extensão de mensagem.
+
+1. Na caixa de texto, insira **oi**. Pode ser necessário inserir sua pesquisa várias vezes.
+
+1. A mensagem **Você precisará entrar para usar este aplicativo** será exibida:
+
+    ![Captura de tela de um desafio de autenticação em uma extensão de mensagem baseada em pesquisa. Um link para entrar é exibido.](../media/2-sign-in.png)
+
+1. Siga o link de **login** para iniciar o fluxo de autenticação.
+
+1. Concorde com as permissões solicitadas e retorne ao Microsoft Teams:
+
+    ![Captura de tela da caixa de diálogo de consentimento de permissão da API do Microsoft Entra.](../media/18-api-permission-consent.png)
+
+1. Aguarde a conclusão da pesquisa e a exibição dos resultados.
+
+1. Na lista de resultados, clique em **oi** para inserir um cartão na caixa de redigir mensagem.
+
+Retorne ao Visual Studio e selecione **Parar** na barra de ferramentas ou pressione <kbd>Shift</kbd> + <kbd>F5</kbd> para interromper a sessão de depuração.
+
+[Continue no próximo exercício...](./4-exercise-return-data-api.md)
