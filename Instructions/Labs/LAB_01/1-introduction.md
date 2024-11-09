@@ -1,36 +1,32 @@
 ---
 lab:
   title: Introdução
-  module: 'LAB 03: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
+  module: 'LAB 01: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
 ---
 
 # Introdução
 
-As extensões de mensagem permitem que os usuários trabalhem com sistemas externos do Microsoft Teams e do Microsoft Outlook. Os usuários podem usar extensões de mensagem para procurar e alterar dados e compartilhar as informações desses sistemas em mensagens e emails como um cartão com formatação avançada.
+As extensões de mensagem permitem que os usuários trabalhem com sistemas externos do Microsoft Teams e do Microsoft Outlook. Os usuários podem usar extensões de mensagem para procurar, alterar e compartilhar dados desses sistemas em mensagens e emails como um cartão com formatação avançada.
 
-Suponha que você tenha uma Lista do SharePoint Online com informações de produto atuais e relevantes para sua organização. Você quer pesquisar e compartilhar essas informações no Microsoft 365. Você também quer que o Copilot para Microsoft 365 use essas informações em suas respostas.
+Suponha que você tenha uma API personalizada que usa para acessar informações do produto que são atuais e relevantes para sua organização. Você quer pesquisar e compartilhar essas informações no Microsoft 365. Você também quer que o Copilot para Microsoft 365 use essas informações em suas respostas.
 
-![Captura de tela da página inicial do site da equipe do SharePoint Online de suporte ao produto. Uma lista de produtos lançados recentemente é mostrada.](../media/1-sharepoint-online-product-support-site.png)
+Neste módulo, você criará uma extensão de mensagem. Sua extensão de mensagem usa um bot para se comunicar com o Microsoft Teams, Microsoft Outlook e Copilot para Microsoft 365.
 
-Neste laboratório, você criará uma extensão de mensagem. Sua extensão de mensagem usa um bot para se comunicar com o Microsoft Teams, Microsoft Outlook e Copilot para Microsoft 365.
+![Captura de tela dos resultados da pesquisa retornados por uma extensão de mensagem baseada em pesquisa no Microsoft Teams.](../media/1-search-results.png)
 
-![Captura de tela dos resultados da pesquisa retornados por uma extensão de mensagem baseada em pesquisa no Microsoft Teams.](../media/2-search-results-nuget.png)
+Ele usa o Microsoft Entra para autenticar usuários, o que permite que retorne dados da API em seu nome.
 
-Ele usa o Microsoft Entra para autenticar usuários, o que permite que retorne dados do SharePoint Online usando a API do Microsoft Graph em seu nome.
+Depois que o usuário se autenticar, sua extensão de mensagem obterá dados da API e retornará os resultados de pesquisa que podem ser inseridos em mensagens e emails como um cartão formatado avançado e, em seguida, compartilhados.
 
-![Captura de tela de um desafio de autenticação em uma extensão de mensagem baseada em pesquisa. Um link para entrar é exibido.](../media/3-sign-in.png)
+![Captura de tela dos resultados da pesquisa que usam dados de uma API externa no Microsoft Teams.](../media/3-search-results-api.png)
 
-Depois que o usuário se autenticar, sua extensão de mensagem obterá informações sobre o produto do SharePoint Online usando a API do Microsoft Graph. Ela retornará resultados da pesquisa que podem ser incorporados em mensagens e emails como um cartão formatação avançada e, em seguida, compartilhados.
+![Captura de tela do resultado da pesquisa inserido em uma mensagem no Microsoft Teams.](../media/4-adaptive-card.png)
 
-![Captura de tela dos resultados da pesquisa retornados por uma extensão de mensagem baseada em pesquisa no Microsoft Teams. Os resultados da pesquisa são retornados do SharePoint Online. Cada resultado da pesquisa exibe o nome, a categoria e a imagem do produto.](../media/4-search-results-sharepoint-online.png)
+Ele funciona com o Copilot para Microsoft 365 como um plug-in, permitindo que consulte os dados do produto em nome do usuário e use os dados retornados em suas respostas.
 
-![Captura de tela do resultado da pesquisa inserido em uma mensagem no Microsoft Teams. Os resultados da pesquisa são renderizados como um Cartão Adaptável com o nome do produto, a categoria, o volume de chamadas e a data de liberação. Um botão de ação com o título Exibir é exibido e os usuários podem usar para navegar até o item da lista de produtos no SharePoint Online.](../media/5-adaptive-card.png)
+![Captura de tela de uma resposta no Copilot para Microsoft 365 que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/5-copilot-answer.png)
 
-Ele funciona com o Copilot para Microsoft 365 como um plug-in, permitindo que consulte a Lista do SharePoint Online em nome do usuário e use os dados retornados em suas respostas.
-
-![Captura de tela de uma resposta no Copilot para Microsoft 365 que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/6-copilot-answer.png)
-
-Ao final deste laboratório, você será capaz criar extensões de mensagem escritas em C# (em execução no .NET). Elas podem ser usadas no Microsoft Teams, Microsoft Outlook e Copilot para Microsoft 365, consultar dados por trás de APIs protegidas e retornar os resultados como cartões com formatação avançada.
+Ao final deste módulo, você conseguirá criar extensões de mensagem escritas em C# (em execução no .NET). Elas podem ser usadas no Microsoft Teams, Microsoft Outlook e Copilot para Microsoft 365, consultar dados por trás de APIs protegidas e retornar os resultados como cartões com formatação avançada.
 
 ## Pré-requisitos
 
@@ -39,8 +35,25 @@ Ao final deste laboratório, você será capaz criar extensões de mensagem escr
 - Conhecimento básico de autenticação
 - Acesso de administrador a um locatário do Microsoft 365
 - Acesso a uma assinatura do Azure
-- O acesso ao Copilot para Microsoft 365 é opcional e necessário apenas para concluir um exercício
-- Visual Studio 2022 17.9 com o [Kit de Ferramentas do Teams](/microsoftteams/platform/toolkit/toolkit-v4/teams-toolkit-fundamentals-vs) (componente de ferramentas de desenvolvimento do Microsoft Teams) instalado
+- O acesso ao Copilot para Microsoft 365 é opcional e necessário apenas para concluir o **Exercício 4: Tarefa 5**.
+- Visual Studio 2022 17.10+ com o [Kit de Ferramentas do Teams](/microsoftteams/platform/toolkit/toolkit-v4/teams-toolkit-fundamentals-vs) (componente de ferramentas de desenvolvimento do Microsoft Teams) instalado
 - [.NET 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Proxy de desenvolvimento 0.19.1+](https://aka.ms/devproxy)
 
-Quando estiver pronto para começar, [continue no próximo exercício...](./2-exercise-create-a-message-extension.md) 
+> [!NOTE]
+> O único exercício neste laboratório que requer uma licença do Microsoft 365 Copilot é o **Exercício 4: Tarefa 5**. Tudo até esse ponto deve ser feito, independentemente de seu locatário ter o Copilot ou não.
+
+## Duração do laboratório
+
+  - **Tempo estimado para conclusão:** 150 minutos
+
+## Objetivos do aprendizado
+
+Ao final deste módulo, você estará apto a:
+
+- Entender o que são extensões de mensagem e como criá-las.
+- Criar uma extensão de mensagem.
+- Entender como autenticar usuários usando logon único e chamar uma API personalizada protegida com autenticação do Microsoft Entra.
+- Entender como estender e otimizar extensões de mensagem para uso com o Copilot para Microsoft 365.
+
+Quando estiver tudo pronto para começar, [continue para o primeiro exercício...](./2-exercise-create-a-message-extension.md)

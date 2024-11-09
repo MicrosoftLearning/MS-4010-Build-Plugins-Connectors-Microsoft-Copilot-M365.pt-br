@@ -1,4 +1,4 @@
-# INF99X: exemplo de curso
+# MS04919: crie plugins e conectores para o Microsoft Copilot para Microsoft 365
 
 **Você é um MCT?** Dê uma olhada no nosso [Guia de usuário do GitHub para MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
 
