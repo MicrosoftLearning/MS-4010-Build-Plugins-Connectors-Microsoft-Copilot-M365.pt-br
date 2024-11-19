@@ -1,7 +1,7 @@
 ---
 lab:
   title: Exercício 1 – Executar o exemplo como uma extensão de mensagem
-  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft Copilot'
+  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft 365 Copilot'
 ---
 
 # Exercício 1 – Executar o exemplo como uma extensão de mensagem
@@ -234,6 +234,6 @@ O código lê a tabela **Produtos** em cada consulta, mas as outras tabelas só 
 
 Depois de seguir todas as tarefas neste exercício, você terá um aplicativo de extensão de mensagem funcional que pode ser usado como um plug-in do Microsoft 365 para Teams ou Outlook.
 
-Quando tudo estiver funcionando, você pode executar o aplicativo de exemplo no **Microsoft Copilot para Microsoft 365**! 
+Quando estiver tudo funcionando, você poderá executar o aplicativo de exemplo no **Microsoft 365 Copilot**. 
 
 [Continue no próximo exercício...](./4-exercise-2-run-copilot-plugin.md)

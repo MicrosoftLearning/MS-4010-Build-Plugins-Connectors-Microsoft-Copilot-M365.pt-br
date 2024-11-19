@@ -1,7 +1,7 @@
 ---
 lab:
   title: Exercício 4 – Explorar o código-fonte do plugin
-  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft Copilot'
+  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft 365 Copilot'
 ---
 
 # Exercício 4 – Explorar o código-fonte do plugin
@@ -34,7 +34,7 @@ Agora dê uma olhada no **nome** e na **descrição**. Observe que a **descriç�
     },
     "description": {
         "short": "App allows you to find and update product inventory information",
-        "full": "Northwind Inventory is the ultimate tool for managing your product inventory. With its intuitive interface and powerful features, you'll be able to easily find your products by name, category, inventory status, and supplier city. You can also update inventory information with the app. \n\n **Why Choose Northwind Inventory:** \n\n Northwind Inventory is the perfect solution for businesses of all sizes that need to keep track of their inventory. Whether you're a small business owner or a large corporation, Northwind Inventory can help you stay on top of your inventory management needs. \n\n **Features and Benefits:** \n\n - Easy Product Search through Microsoft Copilot. Simply start by saying, 'Find northwind dairy products that are low on stock' \r - Real-Time Inventory Updates: Keep track of inventory levels in real-time and update them as needed \r  - User-Friendly Interface: Northwind Inventory's intuitive interface makes it easy to navigate and use \n\n **Availability:** \n\n To use Northwind Inventory, you'll need an active Microsoft 365 account . Ensure that your administrator enables the app for your Microsoft 365 account."
+        "full": "Northwind Inventory is the ultimate tool for managing your product inventory. With its intuitive interface and powerful features, you'll be able to easily find your products by name, category, inventory status, and supplier city. You can also update inventory information with the app. \n\n **Why Choose Northwind Inventory:** \n\n Northwind Inventory is the perfect solution for businesses of all sizes that need to keep track of their inventory. Whether you're a small business owner or a large corporation, Northwind Inventory can help you stay on top of your inventory management needs. \n\n **Features and Benefits:** \n\n - Easy Product Search through Microsoft 365 Copilot. Simply start by saying, 'Find northwind dairy products that are low on stock' \r - Real-Time Inventory Updates: Keep track of inventory levels in real-time and update them as needed \r  - User-Friendly Interface: Northwind Inventory's intuitive interface makes it easy to navigate and use \n\n **Availability:** \n\n To use Northwind Inventory, you'll need an active Microsoft 365 account . Ensure that your administrator enables the app for your Microsoft 365 account."
     },
 ```
 
@@ -365,6 +365,6 @@ Como você pode ver, o código obtém esses dois valores, atualiza o banco de da
 
 ## Parabéns
 
-Você concluiu o Exercício 5 e o laboratório do plug-in Extensões de Mensagem do Copilot para Microsoft 365. Agradeço por fazer esses laboratórios!
+Você concluiu o Exercício 5 e o laboratório do plug-in Extensões de Mensagem do Microsoft 365 Copilot. Agradeço por fazer esses laboratórios!
 
 [Continue no resumo do laboratório...](./7-summary.md)

@@ -1,7 +1,7 @@
 ---
 lab:
   title: Exercício 2 – Adicionar logon único
-  module: 'LAB 01: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
+  module: 'LAB 01: Connect Microsoft 365 Copilot to your external data in real-time with message extension plugins built with .NET and Visual Studio'
 ---
 
 # Exercício 2 – Adicionar logon único
@@ -244,7 +244,7 @@ Em seguida, atualize o código do bot para usar o nome da configuração de cone
 
 1. Na pasta **Pesquisar**, abra **SearchApp.cs**.
 
-1. No início da classe **SearchApp**, crie um construtor que aceite um objeto **IConfiguration** e atribua o valor da propriedade **CONNECTION_NAME** a um campo privado chamado **connectionName**:
+1. No início da classe **SearchApp**, (mais ou menos na linha 14), crie um construtor que aceite um objeto **IConfiguration** e atribua o valor da propriedade **CONNECTION_NAME** a um campo privado chamado **connectionName**:
 
     ```csharp
     private readonly string connectionName;
