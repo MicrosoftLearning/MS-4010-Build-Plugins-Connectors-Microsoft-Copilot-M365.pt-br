@@ -1,17 +1,17 @@
 ---
 lab:
   title: Exercício 2 – Executar o exemplo como um plug-in do Copilot
-  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft Copilot'
+  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft 365 Copilot'
 ---
 
 # Exercício 2 – Executar o exemplo como um plug-in do Copilot
 
-Neste exercício, você executará o aplicativo como um plug-in para o Microsoft Copilot para Microsoft 365. Você testará vários prompts e observará como o plug-in é invocado usando diferentes parâmetros.
+Neste exercício, você executará o aplicativo como um plugin para o Microsoft 365 Copilot. Você testará vários prompts e observará como o plug-in é invocado usando diferentes parâmetros.
 
 > [!NOTE]  
-> Para fazer o exercício a seguir, sua conta deve ter uma licença válida para o Copilot para Microsoft 365.
+> Para fazer o exercício a seguir, sua conta deve ter uma licença válida para o Microsoft 365 Copilot.
 
-## Tarefa 1– Testar no Microsoft Copilot para Microsoft 365 (parâmetro único)
+## Tarefa 1– Testar no Microsoft 365 Copilot (parâmetro único)
 
 1. No trilho do aplicativo à esquerda, selecione o aplicativo **Copilot**.
 
@@ -45,7 +45,7 @@ Teste estes cartões adaptáveis para agir sobre os produtos. Isso não afeta as
 
 Sinta-se à vontade para tentar criar seus próprios prompts. Você descobrirá que eles só funcionam se o Copilot for capaz de consultar o plug-in para obter as informações necessárias. Isso ressalta a necessidade de antecipar os tipos de prompts que os usuários emitirão e fornecer tipos correspondentes de consultas para cada um. Ter vários parâmetros tornará isso mais poderoso!
 
-## Tarefa 2 – Testar no Microsoft Copilot para Microsoft 365 (vários parâmetros)
+## Tarefa 2 – Testar no Microsoft 365 Copilot (vários parâmetros)
 
 Neste exercício, você testará alguns prompts que exercitam o recurso de vários parâmetro no plug-in de exemplo. Esses prompts solicitarão dados que podem ser recuperados por **nome**, **categoria**, **status de inventário**, **cidade do fornecedor** e **nível de estoque**, conforme definido no **manifesto do aplicativo**.
 
@@ -111,7 +111,7 @@ Como você pode notar, abaixo da resposta gerada pelo Copilot há uma tabela com
 
 ## Verifique seu trabalho
 
-Depois de concluir as tarefas neste exercício, você conseguirá usar o plug-in do **Inventário da Northwind** no Copilot para Microsoft 365. 
+Depois de concluir as tarefas deste exercício, você conseguirá usar o plug-in do **Inventário da Northwind** no Microsoft 365 Copilot. 
 
 Feito esse exercício, você pode adicionar um novo comando à extensão de mensagem para que você possa expandir os recursos do plug-in e realizar mais tarefas. 
 

@@ -1,14 +1,14 @@
 ---
 lab:
-  title: Exercício 4 – Estender e otimizar extensões de mensagem para uso com o Copilot para Microsoft 365
-  module: 'LAB 01: Connect Copilot for Microsoft 365 to your external data in real-time with message extension plugins built with .NET and Visual Studio'
+  title: Exercício 4 – Estender e otimizar extensões de mensagem para uso com o Microsoft 365 Copilot
+  module: 'LAB 01: Connect Microsoft 365 Copilot to your external data in real-time with message extension plugins built with .NET and Visual Studio'
 ---
 
-# Exercício 4 – Estender e otimizar extensões de mensagem para uso com o Copilot para Microsoft 365
+# Exercício 4 – Estender e otimizar extensões de mensagem para uso com o Microsoft 365 Copilot
 
-Neste exercício, você estenderá e otimizará sua extensão de mensagem para uso com o Copilot para Microsoft 365. Você adicionará um novo parâmetro chamado Público-alvo e atualizará a lógica de extensão de mensagem para manipular vários parâmetros. Por último, você executará e depurará a extensão de mensagem e a testará no Copilot no Microsoft Teams.
+Neste exercício, você estenderá e otimizará sua extensão de mensagem para uso com o Microsoft 365 Copilot. Você adicionará um novo parâmetro chamado Público-alvo e atualizará a lógica de extensão de mensagem para manipular vários parâmetros. Por último, você executará e depurará a extensão de mensagem e a testará no Copilot no Microsoft Teams.
 
-![Captura de tela de uma resposta no Copilot para Microsoft 365 que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/5-copilot-answer.png)
+![Captura de tela de uma resposta no Microsoft 365 Copilot que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/5-copilot-answer.png)
 
 > [!NOTE]
 > A única tarefa neste exercício que requer uma licença do Microsoft 365 Copilot é a Tarefa 5. As tarefas anteriores devem ser feitas independentemente de o locatário ter o Copilot ou não.
@@ -212,21 +212,21 @@ Em seguida, inicie uma sessão de depuração no Visual Studio:
 
 1. Na lista de plug-ins, alterne o plug-in de **produtos da Contoso** para habilitá-lo.
 
-    ![Captura de tela do Copilot para Microsoft 365 no Microsoft Teams com o plug-in de produtos da Contoso habilitado.](../media/20-copilot-plugin-enabled.png)
+    ![Captura de tela do Microsoft 365 Copilot no Microsoft Teams com o plug-in de produtos da Contoso habilitado.](../media/20-copilot-plugin-enabled.png)
 
 1. Insira **Localizar produtos da Contoso destinados a indivíduos** como mensagem e envie-a.
 
 1. Aguarde a resposta do Copilot:
 
-    ![Captura de tela do Copilot para Microsoft 365 no Microsoft Teams mostrando a mensagem do Copilot mostrada durante o processamento da solicitação do usuário.](../media/21-copilot-thinking.png)
+    ![Captura de tela do Microsoft 365 Copilot no Microsoft Teams mostrando a mensagem do Copilot mostrada durante o processamento da solicitação do usuário.](../media/21-copilot-thinking.png)
 
 1. Na resposta do Copilot, os dados retornados na resposta do plug-in são exibidos e o plug-in é referenciado na resposta:
 
-    ![Captura de tela de uma resposta no Copilot para Microsoft 365 que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/5-copilot-answer.png)
+    ![Captura de tela de uma resposta no Microsoft 365 Copilot que contém informações retornadas pelo plug-in de extensão de mensagem. Um cartão adaptável é exibido mostrando informações do produto.](../media/5-copilot-answer.png)
 
 1. Para exibir o Cartão Adaptável relevante para o resultado, passe o mouse sobre as referências na resposta do Copilot:
 
-    ![Captura de tela do Copilot para Microsoft 365 no Microsoft Teams mostrando um Cartão Adaptável com informações do produto exibidas. O cartão é exibido quando o usuário passa o mouse sobre uma referência na resposta do Copilot.](../media/22-copilot-reference.png)
+    ![Captura de tela do Microsoft 365 Copilot no Microsoft Teams mostrando um Cartão Adaptável com informações do produto exibidas. O cartão é exibido quando o usuário passa o mouse sobre uma referência na resposta do Copilot.](../media/22-copilot-reference.png)
 
 Retorne ao Visual Studio e selecione **Parar** na barra de ferramentas ou pressione <kbd>Shift</kbd> + <kbd>F5</kbd> para interromper a sessão de depuração. Além disso, encerre o proxy de desenvolvimento pressionando <kbd>Ctrl</kbd> + <kbd>C</kbd>.
 

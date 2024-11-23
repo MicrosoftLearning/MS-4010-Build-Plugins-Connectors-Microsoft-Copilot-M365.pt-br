@@ -1,12 +1,12 @@
 ---
 lab:
   title: Exercício 3 - Adicionar um novo comando
-  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft Copilot'
+  module: 'LAB 02: Build your own message extension plugin with TypeScript (TS) for Microsoft 365 Copilot'
 ---
 
 # Exercício 3 - Adicionar um novo comando
 
-Neste exercício, você aprimorará o plug-in de extensão de mensagem do Teams e do Copilot adicionando um novo comando. Embora a extensão de mensagem atual forneça informações sobre produtos no banco de dados do inventário da Northwind com eficácia, ela não fornece informações relacionadas aos clientes da Northwind. Você apresentará um novo comando associado a uma chamada de API que recupera produtos ordenados por um nome de cliente especificado pelo usuário. Este exercício pressupõe que você tenha feito pelo menos os exercícios 1, 2 e 3. Não tem problema pular o Exercício 4 caso você não tenha uma licença do Copilot para Microsoft 365.
+Neste exercício, você aprimorará o plug-in de extensão de mensagem do Teams e do Copilot adicionando um novo comando. Embora a extensão de mensagem atual forneça informações sobre produtos no banco de dados do inventário da Northwind com eficácia, ela não fornece informações relacionadas aos clientes da Northwind. Você apresentará um novo comando associado a uma chamada de API que recupera produtos ordenados por um nome de cliente especificado pelo usuário. Este exercício pressupõe que você tenha feito pelo menos os exercícios 1, 2 e 3. Não tem problema pular o Exercício 4 caso você não tenha uma licença do Microsoft 365 Copilot.
 
 Para isso, passaremos pelas seguintes tarefas:
 
@@ -232,7 +232,7 @@ Agora, vamos modificar o arquivo **products.ts** para adicionar a nova consulta 
 
 ## Tarefa 5 – Executar o aplicativo! Buscar produto pelo nome da empresa
 
-Agora você já pode testar o exemplo como um plug-in para o Copilot para Microsoft 365.
+Agora você já pode testar o exemplo como um plug-in para o Microsoft 365 Copilot.
 
 1. Remova o aplicativo **Northwest Inventory** no Teams. Essa tarefa é necessária, pois você está atualizando o manifesto. As atualizações de manifesto requerem que o aplicativo seja reinstalado. A maneira mais limpa de fazer isso é primeiro removê-lo do Teams.
 
