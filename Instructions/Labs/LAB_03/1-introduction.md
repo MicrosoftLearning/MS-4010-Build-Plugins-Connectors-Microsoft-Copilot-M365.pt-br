@@ -1,29 +1,32 @@
 ---
 lab:
   title: Introdução
-  module: 'LAB 03: Build your own message extension plugin with TypeScript (TS) for Microsoft Copilot'
+  module: 'LAB 03: Use Adaptive Cards to show data in API plugins for declarative agents'
 ---
 
 # Introdução
 
-Neste projeto, você aprenderá a usar as Extensões de Mensagem do Teams como plug-ins no Microsoft Copilot para Microsoft 365. O projeto é baseado no exemplo "Inventário da Northwind" contido neste mesmo [repositório GitHub](https://github.com/OfficeDev/Copilot-for-M365-Plugins-Samples/tree/main/samples/msgext-northwind-inventory-ts). Usando o respeitável [Banco de dados Northwind](https://learn.microsoft.com/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases), você terá muitos dados corporativos simulados para trabalhar.
+Ao estender agentes declarativos com ações, você pode conectá-los a sistemas e serviços externos por meio das APIs. Conectar um agente aos seus sistemas existentes pode ajudar a automatizar tarefas e obter insights usando linguagem natural. Para melhorar a experiência do usuário, você pode usar Cartões Adaptáveis para renderizar informações que o agente recupera de APIs de maneira visualmente interessante.
 
-A Northwind opera um negócio de comércio eletrônico de alimentos especiais em Spokane, Washington. Neste laboratório, você trabalhará com o aplicativo do Inventário da Northwind, que fornece acesso ao inventário de produtos e informações financeiras.
+## Cenário de exemplo
 
-Este exercício deve levar aproximadamente **60** minutos para ser concluído.
+Suponha que você tenha criado recentemente um agente declarativo que se integra a uma API de um restaurante local. Usando o agente, você pode navegar pelo menu de hoje e fazer um pedido usando linguagem natural. A API do restaurante fornece uma lista detalhada de pratos, ingredientes e alérgenos. Você quer aprimorar as respostas do agente renderizando as informações sobre os pratos usando Cartões Adaptáveis. Você também quer renderizar o resumo do pedido usando um Cartão Adaptável para fornecer uma representação visual do pedido. Usando Cartões Adaptáveis, você pode incluir imagens, texto e botões para deixar as informações mais interessantes.
 
-## Antes de começar
+## O que faremos?
 
-- Para [**se preparar**](./2-prepare-development-environment.md), comece configurando seu ambiente de desenvolvimento e colocando o aplicativo para executar.
+Neste módulo, você estenderá um plug-in de API existente para um agente declarativo para renderizar informações que ele recebe de uma API usando Cartões Adaptáveis. Você aprenderá a:
 
-- No [**Exercício 1**](./3-exercise-1-run-message-extension.md), você executará o mesmo aplicativo como uma [extensão de mensagem](https://learn.microsoft.com/microsoftteams/platform/messaging-extensions/what-are-messaging-extensions) no Microsoft Teams e no Outlook.
+- **Criar**: criar um modelo de Cartão Adaptável que mostra os dados da API.
+- **Verificar**: verificar se o modelo do Cartão Adaptativo renderiza corretamente os dados da API.
+- **Configurar**: configurar o plug-in da API para renderizar os dados usando o modelo de Cartão Adaptável.
+- **Provisionar**: carregar o agente declarativo no Microsoft 365 Copilot e validar os resultados.
 
-- No [**Exercício 2**](./4-exercise-2-run-copilot-plugin.md), você executará o aplicativo como um plug-in para o Copilot for Microsoft 365. Você testará vários prompts e observará como o plug-in é invocado usando diferentes parâmetros. Enquanto conversa com o Copilot, você pode assistir ao console do desenvolvedor para ver as consultas sendo feitas.
+![Captura de tela de um agente declarativo que responde a um usuário com informações de uma API externa usando um Cartão Adaptável.](../media/LAB_03/1-agent-response-adaptive-card-dish.png)
 
-- No [**Exercício 3**](./5-exercise-3-add-new-command.md), você aprenderá a adicionar um novo comando ao aplicativo, para que possa expandir os recursos do plug-in e executar mais tarefas.
+## Duração do laboratório
 
-  ![Captura de tela de um cartão adaptável exibindo um produto.](../media/1-00-product-card-only.png)
+- **Tempo estimado para conclusão:** 35 minutos
 
-- Por fim, no [**Exercício 4**](./6-exercise-4-explore-plugin-source-code.md), você fará um tour pelo código para ver como ele funciona com mais profundidade. Se você ainda não tiver o Copilot, todo o restante ainda funcionará como uma extensão de mensagem para o Microsoft 365.
+## Objetivos do aprendizado
 
-Quando estiver tudo pronto para começar, [continue no próximo exercício...](./2-prepare-development-environment.md)
+Ao final deste módulo, você saberá como criar modelos de Cartão Adaptável para uso com agentes declarativos. Você poderá verificar se os modelos renderizam os dados corretamente e configurar o plug-in da API para usar os modelos.
