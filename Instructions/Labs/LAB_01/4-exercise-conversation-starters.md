@@ -114,7 +114,7 @@ Em seguida, teste o agente declarativo no Microsoft 365 e valide os resultados.
 
 Continuando no navegador da Web:
 
-1. No **Microsoft 365 Copilot**, clique no ícone no canto superior direito para expandir o **painel lateral do Copilot**.
+1. No **Microsoft 365 Copilot**, clique no ícone no canto superior direito para **expandir o painel lateral do Copilot**.
 1. Encontre **Suporte ao produto** na lista de agentes e selecione-o para entrar na experiência imersiva para conversar diretamente com o agente. Observe que os iniciadores de conversa que você definiu no manifesto são exibidos na interface do usuário.
 
 ![Captura de tela do Microsoft Edge mostrando o agente declarativo de Suporte ao produto na experiência imersiva com iniciadores de conversa personalizados.](../media/LAB_01/test-conversation-starters.png)
