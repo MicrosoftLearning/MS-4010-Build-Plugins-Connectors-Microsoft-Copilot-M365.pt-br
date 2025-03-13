@@ -44,7 +44,7 @@ No Visual Studio Code:
 1. Antes de continuar, na guia **Extensões** da barra de atividades, pesquise e instale a extensão **Visualizador do Cartão Adaptável** e crie um arquivo de dados para o Cartão Adaptável:
   1. Abra a paleta de comandos pressionando <kbd>CTRL</kbd>+<kbd>P</kbd> no teclado. Digite `>Adaptive` para localizar comandos relacionados a trabalhar com Cartões Adaptáveis.
 
-    ![Captura de tela do Visual Studio Code mostrando comandos relacionados a trabalhar com Cartões Adaptáveis.](../media/LAB_03/LAB_03/3-visual-studio-code-adaptive-card-commands.png)
+    ![Captura de tela do Visual Studio Code mostrando comandos relacionados a trabalhar com Cartões Adaptáveis.](../media/LAB_03/3-visual-studio-code-adaptive-card-commands.png)
 
   1. Na lista, escolha **Cartão Adaptável: Novo Arquivo de Dados**. O Visual Studio Code criará um arquivo chamado **dish.data.json**.
   1. Substitua o conteúdo por um dado que represente um prato:
@@ -68,7 +68,7 @@ No Visual Studio Code:
 1. Volte para o arquivo **dish.json**.
 1. Na lente, selecione **Visualizar Cartão Adaptável**.
 
-  ![Captura de tela do Visual Studio Code mostrando a visualização do Cartão Adaptável.](../media/LAB_03/LAB_03/3-visual-studio-code-adaptive-card-preview.png)
+  ![Captura de tela do Visual Studio Code mostrando a visualização do Cartão Adaptável.](../media/LAB_03/3-visual-studio-code-adaptive-card-preview.png)
 
   O Visual Studio Code abrirá uma exibição do cartão ao lado. À medida que você edita o cartão, as alterações ficam imediatamente visíveis na lateral.
 
