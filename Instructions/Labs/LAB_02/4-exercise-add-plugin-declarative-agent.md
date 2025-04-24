@@ -122,6 +122,7 @@ No Visual Studio Code:
     > Para preservar a formatação, talvez seja necessário executar várias operações de copiar/colar no Bloco de Notas antes de copiar para o Visual Studio Code.
 
     1. Salve as alterações.
+
 1. Para ajudar os usuários a entender para que eles podem usar o agente, adicione iniciadores de conversa:
     1. Abra o arquivo **appPackage/declarativeAgent.json**.
     1. Após a propriedade **instructions**, adicione uma nova propriedade chamada **conversation_starters**:
