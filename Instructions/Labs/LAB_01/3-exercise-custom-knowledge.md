@@ -14,7 +14,7 @@ Neste exercício, você vai usar o Microsoft Learn como fonte de fundamentação
 
 ## Tarefa 1 — Configurar dados de fundamentação
 
-Configure a pasta do OneDrive como uma fonte de dados de base no manifesto do agente declarativo.
+Configure o Microsoft Learn como uma fonte de dados de fundamento no manifesto do agente declarativo.
 
 No Visual Studio Code:
 
